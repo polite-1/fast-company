@@ -4,8 +4,8 @@ const SearchStatus = ({ length }) => {
   const renderPhrase = (number) => {
     const lastOne = Number(number.toString().slice(-1))
     if (number > 4 && number < 15) return "Человек тусанет"
-    if ([2, 3, 4].indexOf(lastOne) >= 0) return "Человека тусанут"
     if (lastOne === 1) return "Человек тусанет"
+    if ([2, 3, 4].indexOf(lastOne) >= 0) return "Человека тусанут"
     return "Человек тусанет"
   }
   return (
@@ -19,6 +19,6 @@ const SearchStatus = ({ length }) => {
   )
 }
 SearchStatus.propTypes = {
-  length: PropTypes.number.isRequired
+  length: PropTypes.number
 }
 export default SearchStatus

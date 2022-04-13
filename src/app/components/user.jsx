@@ -8,8 +8,8 @@ const User = (props) => {
     <tr>
       <td>{props.name}</td>
       <td>
-        {props.qualities.map((item) => (
-          <Qualitie color={item.color} name={item.name} key={item._id} />
+        {props.qualities.map((qual) => (
+          <Qualitie {...qual} key={qual._id} />
         ))}
       </td>
       <td>{props.profession.name}</td>
@@ -39,11 +39,11 @@ const User = (props) => {
 User.propTypes = {
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  qualities: PropTypes.array.isRequired,
+  qualities: PropTypes.array,
   profession: PropTypes.object.isRequired,
   completedMeetings: PropTypes.number.isRequired,
   rate: PropTypes.number.isRequired,
-  bookmark: PropTypes.bool.isRequired,
+  bookmark: PropTypes.bool,
   onToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 }
