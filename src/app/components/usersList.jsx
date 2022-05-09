@@ -12,9 +12,9 @@ const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
+  const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
   const pageSize = 8
-
   const [users, setUsers] = useState()
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data))
@@ -40,10 +40,16 @@ const UsersList = () => {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [selectedProf])
+  }, [selectedProf, search])
 
   const handleProfessionSelect = (item) => {
+    if (search !== '') setSearch('')
     setSelectedProf(item)
+  }
+
+  const handleSearh = ({ target }) => {
+    setSelectedProf(undefined)
+    setSearch(target.value)
   }
 
   const handlePageChange = (pageIndex) => {
@@ -59,7 +65,12 @@ const UsersList = () => {
      : users */
 
   if (users) {
-    const filtredUsers = selectedProf
+    const filtredUsers = search
+      ? users.filter(
+          (user) =>
+            user.name.toLowerCase().includes(search.toLowerCase()) === true
+        )
+      : selectedProf
       ? users.filter(
           (user) =>
             JSON.stringify(user.profession) === JSON.stringify(selectedProf)
@@ -89,6 +100,13 @@ const UsersList = () => {
         )}
         <div className="d-flex flex-column">
           <SearchStatus length={count} />
+          <input
+            type="text"
+            name="search"
+            placeholder="Введите имя пользователя..."
+            onChange={handleSearh}
+            value={search}
+          />
           {count > 0 && (
             <UserTable
               users={userCrop}
